@@ -2,6 +2,9 @@
 const express = require("express");
 const Africastalking = require("africastalking");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const message = require("../models/message");
+const { messageSchema } = require('../support/validation');
 dotenv.config();
 
 const router = express.Router();
@@ -79,7 +82,7 @@ router.post("/ussd", (req, res) => {
     response = `CON Where to visit in HUYE
     1. National Ethnographic of Rwanda
     2. King's Palace Museum`;
-  }else if (text === "2*1*1*1") {
+  } else if (text === "2*1*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Thank you for visiting the National Ethnographic of Rwanda ! Here are the main details of our activities:
@@ -106,7 +109,7 @@ router.post("/ussd", (req, res) => {
     response = `CON Aho gusura muri MUSANZE?
     1. Volcanoes National Park
     2. Musanze Caves`;
-  }else if (text === "1*2*1*1") {
+  } else if (text === "1*2*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Urakoze gusura IBIRUNGA! Dore uko amakuru y'ingenzi ugomba Kumenya:
@@ -127,7 +130,7 @@ router.post("/ussd", (req, res) => {
     response = `CON Where to Visit in MUSANZE?
     1. Volcanoes National Park
     2. Musanze Caves`;
-  }else if (text === "2*2*1*1") {
+  } else if (text === "2*2*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Thank you for visiting Volcanoes National Park ! Here are the main details you must know:
@@ -181,7 +184,7 @@ router.post("/ussd", (req, res) => {
     1. Karongi Hot Springs
     2. Kivu Belt
     3. Bises`;
-  }else if (text === "2*3*1*1") {
+  } else if (text === "2*3*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Thank you for visiting Karongi Hot Springs ! Here are the main details you must know:
@@ -205,7 +208,7 @@ router.post("/ussd", (req, res) => {
   } else if (text === "1*4*1") {
     response = `CON Aho gusura muri kayonza?
     1. Akagera National Park`;
-  }else if (text === "1*4*1*1") {
+  } else if (text === "1*4*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Urakoze gusura Pariki y'Akagera ! Dore uko amakuru y'ingenzi ugomba Kumenya:
@@ -229,7 +232,7 @@ router.post("/ussd", (req, res) => {
   } else if (text === "2*4*1") {
     response = `CON Where to Visit in Kayonza?
     1. Akagera National Park`;
-  }else if (text === "2*4*1*1") {
+  } else if (text === "2*4*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Thank you for visiting Akagera National Park ! Here are the main details you must know:
@@ -255,7 +258,7 @@ router.post("/ussd", (req, res) => {
     response = `CON Aho gusura muri Nyarugenge?
     1. Nyamirambo Neighborhood
     2. Kandt House Museum`;
-  }else if (text === "1*5*1*1") {
+  } else if (text === "1*5*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Urakoze gusura Mu Biryogo! Dore uko amakuru y'ingenzi ugomba Kumenya:
@@ -281,7 +284,7 @@ router.post("/ussd", (req, res) => {
     response = `CON Where to Visit in Nyarugenge?
     1. Nyamirambo Neighborhood
     2. Kandt House Museum`;
-  }else if (text === "2*5*1*1") {
+  } else if (text === "2*5*1*1") {
     sms.send({
       to: phoneNumber,
       message: `Thank you for visiting Nyamirambo Neighborhood ! Here are the main details to Notice:

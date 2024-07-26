@@ -1,6 +1,7 @@
 const express = require("express");
 const ussdRoute = require("./routers/ussd");
 const userRoute = require("./routers/userRouter");
+const messageRouter = require('./routers/messageRouter');
 const { dbConnect } = require("./config/db");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
