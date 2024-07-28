@@ -6,9 +6,11 @@ const messageSchema = new mongoose.Schema({
     language: String,
     sendSms: { type: Boolean, default: false },
     smsContent: { type: String, default: "" },
-    smsResponse: { type: String, default: "" }
+    smsResponse: { type: String, default: "" },
+    sequence: String
 });
 
 const Message = mongoose.model('Message', messageSchema);
 
 module.exports = Message;
+

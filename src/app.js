@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", ussdRoute);
+app.use("/", messageRouter);
 app.use("/user", userRoute);
 
 
