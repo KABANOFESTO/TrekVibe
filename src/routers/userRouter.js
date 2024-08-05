@@ -1,11 +1,43 @@
 const express = require("express");
-const { loginUserSchema } = require('../support/validation');
+const { createUserSchema, loginUserSchema } = require('../support/validation');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const passport = require("passport");
 // const dotenv = require("dotenv");
 // dotenv.config();
 const router = express.Router();
+router.post('/signup', async (req, res) => {
+    try {
+        const validationResult = await createUserSchema.validateAsync(req.body);
+        const userExist = await User.findOne({ email: validationResult.email })
+        if (userExist) {
+            res.status(400).json({ "success": false, message: "user is already exist" })
+        } else {
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(validationResult.password, salt)
+            const user = new User({
+                username: validationResult.username,
+                email: validationResult.email,
+                passport: hashedPassword,
+                role: 'admin'
+            })
+            user.save()
+            .then(user=>res.status(201).json({"success":true,
+                "user":{
+                    id:user._id,
+                    username:user.username,
+                    email:user.email,
+                    role:user.role,
+                    token:generateToken(user)
+                }
+            }))
+            .catch(err=>console.log(err))
+        }
+    }catch(error){
+        res.status(400).json({"success":false,message:error.message})
+    }
+})
 
 router.post('/login', async (req, res) => {
     try {
